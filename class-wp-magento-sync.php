@@ -61,12 +61,12 @@ class WPMagentoSync {
         add_action( 'wp_enqueue_scripts', 'wpms_scripts_styles' );  
 
         // Regular Methods
-        require_once( 'methods.php' );
+        require_once( 'includes/methods.php' );
 
         add_action( 'products_sync', 'pull_magento_products' );
 
         // AJAX Methods
-        require_once( 'ajax-methods.php' );
+        require_once( 'includes/ajax-methods.php' );
 
         add_action('wp_ajax_process_order_as_magento', 'process_order_as_magento');
         add_action('wp_ajax_nopriv_process_order_as_magento', 'process_order_as_magento');
