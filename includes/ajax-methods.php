@@ -1,20 +1,48 @@
 <?php
 
+include( 'class-connection.php' );
+include( 'class-create-customer.php' );
+
 function process_order_as_magento (){
 
-// Create/Login Customer
+    $MGConnection = new MGConnection();
 
-// Create Quote
+    $userEmail = $MGConnection->$userEmail;
+    $adminToken = $MGConnection->$adminToken;
 
-// Add Items To Cart
+    // Create/Login Customer
+    $CustomerCreation = new CreateCustomer();
 
-// Prepare For Checkout
+    $CustomerCreation->$emailAddress = $userEmail;
+    $CustomerCreation->$administrationToken = $adminToken;
 
-// Create An Order
+    $customerExists = $CustomerCreation->isExistingMGCustomer();
 
-// Create An Invoice
+    if( $customerExists ){
 
-// Create A Shipment
+        // Create Quote
+
+    }
+    else {
+
+        // Create New Customer
+        $customerToken = $CustomerCreation->createNewMGUser();
+
+        // Create Quote
+
+    }
+
+    
+
+    // Add Items To Cart
+
+    // Prepare For Checkout
+
+    // Create An Order
+
+    // Create An Invoice
+
+    // Create A Shipment
 
 }
 
