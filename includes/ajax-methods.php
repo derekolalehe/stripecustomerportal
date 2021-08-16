@@ -8,7 +8,7 @@ function process_order_as_magento (){
     $MGConnection = new MGConnection();
 
     $userEmail = $MGConnection->$userEmail;
-    $adminToken = $MGConnection->$adminToken;
+    $adminToken = $MGConnection->getToken();
 
     // Create/Login Customer
     $CustomerCreation = new CreateCustomer();
