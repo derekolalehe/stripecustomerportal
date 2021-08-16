@@ -1,5 +1,6 @@
 <?php
 
+include( 'class-country-data.php' );
 include( 'class-connection.php' );
 include( 'class-create-customer.php' );
 
@@ -26,9 +27,17 @@ function process_order_as_magento (){
     else {
 
         // Create New Customer
-        $customerToken = $CustomerCreation->createNewMGUser();
+        $customerCreated = $CustomerCreation->createNewMGUser();
 
-        // Create Quote
+        if( $customerCreated ){
+
+            // Get Customer Token
+            $customerToken = $CustomerCreation->getCustomerToken();
+            
+            // Create Quote
+
+
+        }
 
     }
 
