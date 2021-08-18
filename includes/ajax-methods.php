@@ -3,13 +3,16 @@
 include( 'class-country-data.php' );
 include( 'class-connection.php' );
 include( 'class-create-customer.php' );
-
+include( 'class-create-quote.php' );
+ 
 function process_order_as_magento (){
 
     $MGConnection = new MGConnection();
 
     $userEmail = $MGConnection->$userEmail;
     $adminToken = $MGConnection->getToken();
+
+    $CreateQuote = new CreateQuote();
 
     // Create/Login Customer
     $CustomerCreation = new CreateCustomer();
@@ -35,7 +38,7 @@ function process_order_as_magento (){
             $customerToken = $CustomerCreation->getCustomerToken();
             
             // Create Quote
-
+            $customerQuote = $CreateQuote->createQuoteId($customerToken);
 
         }
 
