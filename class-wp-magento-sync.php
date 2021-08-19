@@ -1,6 +1,4 @@
 <?php
-
-<?php
 /**
 * WP Magento Sync class file
 *
@@ -59,6 +57,9 @@ class WPMagentoSync {
         }
 
         add_action( 'wp_enqueue_scripts', 'wpms_scripts_styles' );  
+
+        // Regular Methods
+        require_once( 'admin-pages.php' );
 
         // Regular Methods
         require_once( 'includes/methods.php' );
