@@ -46,9 +46,13 @@ class WPMagentoSync {
                 'theme_url' => get_template_directory_uri(),
                 'plugins_url' => plugins_url(),
             );
-            
-            wp_enqueue_script( 'main', plugins_url( 'assets/js/main.js', __FILE__ ), array(), (string)microtime(), true);
-                
+
+            if( is_checkout() ){
+
+                wp_enqueue_script( 'main', plugins_url( 'assets/js/main.js', __FILE__ ), array(), (string)microtime(), true);
+
+            }  
+
             wp_localize_script( 'main', 'wpms_urls', $params ); 
 
             wp_enqueue_style( 'style', plugins_url( 'assets/css/style.css?v=' . (string)microtime(), __FILE__ ), array(), false ); 
