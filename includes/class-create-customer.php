@@ -12,8 +12,8 @@ class CreateCustomer {
 
     private function __construct(){
 
-        $this->$emailAddress = $userEmail;
-        $this->$administrationToken = $adminToken;
+        $this->emailAddress = $userEmail;
+        $this->administrationToken = $adminToken;
 
     }
     
@@ -26,7 +26,7 @@ class CreateCustomer {
         curl_setopt( $curl, CURLOPT_URL, $this->isEmailAvailableURL );
 
         curl_setopt( $curl, CURLOPT_HTTPHEADER, array(
-           'Authorization: ' . $this->$administrationToken,
+           'Authorization: ' . $this->administrationToken,
            'Content-Type: application/json',
         ));
 
@@ -34,8 +34,8 @@ class CreateCustomer {
         curl_setopt( $curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC );
         
         $data_array =  array(
-                            "customerEmail"     => $this->$emailAddress,
-                            "websiteId"         => $this->$websiteId,
+                            "customerEmail"     => $this->emailAddress,
+                            "websiteId"         => $this->websiteId,
                         );
 
         curl_setopt( $crl, CURLOPT_POSTFIELDS, $data_array );
@@ -58,7 +58,7 @@ class CreateCustomer {
 
         $tempPassword = wp_generate_password();
 
-        $user_country = get_post_meta( $user->ID, 'billing_country', true )
+        $user_country = get_post_meta( $user->ID, 'billing_country', true );
 
         $countryId = '';
         $region = (object)[];
@@ -110,10 +110,10 @@ class CreateCustomer {
 
         curl_setopt( $curl, CURLOPT_POST, 1 );
        
-        curl_setopt( $curl, CURLOPT_URL, $this->$createCustomerURL );
+        curl_setopt( $curl, CURLOPT_URL, $this->createCustomerURL );
 
         curl_setopt( $curl, CURLOPT_HTTPHEADER, array(
-           'Authorization: ' . $this->$administrationToken,
+           'Authorization: ' . $this->administrationToken,
            'Content-Type: application/json',
         ));
 
@@ -130,7 +130,7 @@ class CreateCustomer {
 
         curl_close($curl);
 
-        $this->$password = $this->$password;
+        $this->password = $tempPassword;
 
         return true;
 
@@ -142,7 +142,7 @@ class CreateCustomer {
 
         curl_setopt( $curl, CURLOPT_POST, 1 );
        
-        curl_setopt( $curl, CURLOPT_URL, $this->$customerTokenURL );
+        curl_setopt( $curl, CURLOPT_URL, $this->customerTokenURL );
 
         curl_setopt( $curl, CURLOPT_HTTPHEADER, array(
            'Content-Type: application/json',
@@ -152,8 +152,8 @@ class CreateCustomer {
         curl_setopt( $curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC );
 
         $customer_token_data =  array(
-                                    "username"     => $this->$emailAddress,
-                                    "password"         => $this->$password,
+                                    "username"     => $this->emailAddress,
+                                    "password"         => $this->password,
                                 );
 
         curl_setopt( $crl, CURLOPT_POSTFIELDS, $customer_token_data );
