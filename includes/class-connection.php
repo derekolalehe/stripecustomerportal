@@ -10,7 +10,7 @@
         protected function createMGAdminToken (){
 
             $curl = curl_init();
-            curl_setopt($curl, CURLOPT_URL, $this->$url);
+            curl_setopt($curl, CURLOPT_URL, $this->url);
             curl_setopt($curl, CURLOPT_POST, 1);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 
@@ -20,8 +20,8 @@
             curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 
             $data_array =  array(
-                "username"     => $this->$username,
-                "password"     => $this->$password,
+                "username"     => $this->username,
+                "password"     => $this->password,
             );
             curl_setopt($curl, CURLOPT_POSTFIELDS, $data_array);
             
