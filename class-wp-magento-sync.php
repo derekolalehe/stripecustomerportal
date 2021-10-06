@@ -62,6 +62,9 @@ class WPMagentoSync {
 
         add_action( 'wp_enqueue_scripts', 'wpms_scripts_styles' );  
 
+        // Custom Fieldss
+        require_once( 'custom-fields.php' );
+
         // Admin Pages
         require_once( 'admin-pages.php' );
 
