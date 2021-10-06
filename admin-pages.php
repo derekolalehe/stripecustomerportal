@@ -4,7 +4,7 @@ add_action( 'admin_menu', 'wpms_menu_pages' );
 
 function wpms_menu_pages(){ 
     
-    add_submenu_page( 'options-general.php','WP Magento Sync', 'WP Magento Sync','manage_options',
+    add_submenu_page( 'options-general.php','Magento Sync', 'Magento Sync','administrator',
     'wpms-options','wpms_options' );
     
 }

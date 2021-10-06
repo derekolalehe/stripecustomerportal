@@ -1,13 +1,18 @@
 <?php
-
-    private $url = get_option( 'magento_domain' ) . '/rest/V1/intergration/admin/token';
-
-    private $username = get_option( 'magento_admin_username' );
-    private $password = get_option( 'magento_admin_password' );
-
+    
     class MGConnection {
 
+        private $url;
+
+        private $username;
+        private $password;       
+
         protected function createMGAdminToken (){
+
+            $url = get_option( 'magento_domain' ) . '/rest/V1/intergration/admin/token';
+
+            $username = get_option( 'magento_admin_username' );
+            $password = get_option( 'magento_admin_password' );
 
             $curl = curl_init();
             curl_setopt($curl, CURLOPT_URL, $this->url);
@@ -34,5 +39,9 @@
             curl_close($curl);
 
             return $result;
+
+        }
+
     }
+
 ?>

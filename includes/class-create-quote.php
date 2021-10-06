@@ -2,11 +2,17 @@
     class CreateQuote{
         private $administrationToken;  
         private $quoteId;
-        private $storeCode = get_option( 'magento_store_code' );
-        private $url = get_option( 'magento_domain' ) . '/rest' . '/' . $storeCode . '/V1/carts/mine'; //URL needs to be checked
+        private $storeCode;
+        private $url;
 
+       
         private function __construct(){
+            
             $this->administrationToken = $adminToken;
+
+            $storeCode = get_option( 'magento_store_code' );
+            $url = get_option( 'magento_domain' ) . '/rest' . '/' . $storeCode . '/V1/carts/mine'; //URL needs to be checked
+    
         }
 
         protected function createQuoteId($customerToken){
