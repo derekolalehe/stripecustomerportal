@@ -5,15 +5,20 @@ class CreateCustomer {
     private $emailAddress;
     private $administrationToken;
     private $password;    
-    private $storeCode = get_option( 'magento_store_code' );
-    private $isEmailAvailableURL = get_option( 'magento_domain' ) . '/rest' . '/' . $storeCode . '/V1/customers/isEmailAvailable';
-    private $createCustomerURL = get_option( 'magento_domain' ) . '/rest' . '/' . $storeCode . '/V1/customers';
-    private $customerTokenURL = get_option( 'magento_domain' ) . '/rest' . '/' . $storeCode . '/V1/integration/customer/token';
-
+    private $storeCode;
+    private $isEmailAvailableURL;
+    private $createCustomerURL;
+    private $customerTokenURL;
+    
     private function __construct(){
 
         $this->emailAddress = $userEmail;
         $this->administrationToken = $adminToken;
+
+        $storeCode = get_option( 'magento_store_code' );
+    $isEmailAvailableURL = get_option( 'magento_domain' ) . '/rest' . '/' . $storeCode . '/V1/customers/isEmailAvailable';
+    $createCustomerURL = get_option( 'magento_domain' ) . '/rest' . '/' . $storeCode . '/V1/customers';
+    $customerTokenURL = get_option( 'magento_domain' ) . '/rest' . '/' . $storeCode . '/V1/integration/customer/token';
 
     }
     
@@ -84,10 +89,10 @@ class CreateCustomer {
                 "firstname" => $user->user_firstname,
                 "lastname" => $user->user_lastname,
                 "addresses" => array (
-                    "defaultShipping": true,
-                    "defaultBilling": true,
-                    "firstname": $user->user_firstname,
-                    "lastname": $user->user_lastname,
+                    "defaultShipping" => true,
+                    "defaultBilling" => true,
+                    "firstname" => $user->user_firstname,
+                    "lastname" => $user->user_lastname,
                     "region" => array(
                         "regionCode" => $region->code,
                         "region" => $region->name,

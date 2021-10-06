@@ -1,11 +1,11 @@
 <?php
 
-class CustomerCart() {
+class CustomerCart {
 
-    private $storeCode = get_option( 'magento_store_code' );
-    private $items = array();
-    private $addToCartURL = get_option( 'magento_domain' ) . '/rest' . '/' . $storeCode . '/V1/carts/mine/items';
-    private $createOrderURL = get_option( 'magento_domain' ) . '/rest' . '/' . $storeCode . '/V1/carts/mine/payment-information';
+    private $storeCode;
+    private $items;
+    private $addToCartURL;
+    private $createOrderURL;
 
     private function __construct(){
 
@@ -13,6 +13,11 @@ class CustomerCart() {
         $items = $woocommerce->cart->get_cart();
 
         $this->items = $items;
+
+        $storeCode = get_option( 'magento_store_code' );
+        $items = array();
+        $addToCartURL = get_option( 'magento_domain' ) . '/rest' . '/' . $storeCode . '/V1/carts/mine/items';
+        $createOrderURL = get_option( 'magento_domain' ) . '/rest' . '/' . $storeCode . '/V1/carts/mine/payment-information';
 
     }
 
@@ -29,7 +34,7 @@ class CustomerCart() {
                     "sku" => $sku,
                     "qty" => $qty,
                     "quote_id" => $quoteID,
-                );
+                )
 
             );
 
