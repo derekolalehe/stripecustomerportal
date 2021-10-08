@@ -10,10 +10,10 @@
             $this->administrationToken = $adminToken;
 
             $storeCode = get_option( 'magento_store_code' );
-            $url = get_option( 'magento_domain' ) . '/rest/default/V1/stockItems/';
+            $url = get_option( 'magento_domain' ) . '/rest/default/V1/products/';
         }
 
-        protected function GetProductData($productSku){
+        protected function GetProductData( $productSku ){
         
             $curl = curl_init();
             curl_setopt($curl, CURLOPT_POST, 1);
@@ -34,7 +34,7 @@
 
             curl_close($curl);
 
-            return $result;
+            return json_encode( $result );
         }
     }
     
