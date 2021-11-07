@@ -19,12 +19,12 @@ function scp_options(){
 
 ?>
 
-    <h2 style="margin-top: 60px;">Stripe API Options</h2>
+    <h2 style="margin-top: 60px;">Stripe API Keys</h2>
     <hr/>
     <div style="height: 30px;"></div>
 
     <form method="POST" action="">
-        <label for="stripe-api-key">Stripe API Key</label><br/>
+        <label for="stripe-api-key">Stripe API Secret Key</label><br/>
         <input type="text" style="width: 300px;" id="stripe-api-key" name="stripe_api_key" 
         value="<?php echo get_option( 'stripe_api_key' );?>"/>
         <br/><br/>

@@ -34,8 +34,7 @@ class SCP {
 
         require_once( 'admin-pages.php' );
 
-        require_once( 'assets/lib/Stripe.php' );
-        require_once( 'assets/lib/BillingPortal/Session.php' );
+        require_once('stripe-php-7.100.0/init.php');
 
         require_once( 'methods.php' );
 
@@ -56,10 +55,46 @@ class SCP {
 
         function scp_button_shortcode(){
 
-            echo    '<form action="' . esc_attr('admin-post.php') . '" method="POST">' .
+            echo    '<form action="' . esc_attr( admin_url( 'admin-post.php', 'http' ) ) . '" method="POST">' .
                         '<input type="hidden" name="action" value="create_customer_portal_session" />' .
                         '<button type="submit">Customer Portal</button>' .
                     '</form>';
+
+        }
+
+        //Stripe endpoint setup  *http://domain/wp-json/stripecustomerportal/v1/subscriptionended
+        add_action( 'rest_api_init', function () {
+            register_rest_route( 'stripecustomerportal/v1', '/subscriptionended', array(
+              'methods' => 'GET',
+              'callback' => 'change_customer_role',
+            ) );
+        } );
+
+        function change_customer_role ( $data ) {
+
+            $sent_stripe_customerID = $data[ 'customer' ];
+
+            $user = wp_get_current_user();
+
+            $userID = $user->ID;
+
+            $stripe_customerID = get_user_meta( $userID, 'wp__stripe_customer_id', true );
+
+            if( $sent_stripe_customerID == $stripe_customerID ){
+
+                $user->remove_role( 'subscriber' );
+
+                $user->add_role( 'customer' );
+
+            }
+            else {
+
+                return new WP_Error( 'user_mismatch', 'User does not exist', array( 'status' => 404 ) );
+
+            }
+                      
+            return 'Customer ' . $sent_stripe_customerID . ' with subscription ' . 
+            $data[ 'id' ] . ' - SUBSCRIPTION EDNDED';
 
         }
 
