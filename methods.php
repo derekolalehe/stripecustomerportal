@@ -2,21 +2,33 @@
 
 function create_customer_portal_session(){
 
+    global $wpdb;
+
     $userID = get_current_user_id();
 
-    $stripe_customerID = get_user_meta( $userID, 'wp__stripe_customer_id', true );
+    $stripe_customerID = get_user_meta( $userID, $wpdb->prefix . '_stripe_customer_id', true );
+
+    if( $stripe_customerID != false && $stripe_customerID != '' ){
     
-    \Stripe\Stripe::setApiKey( 'sk_test_quJXFb8Cq66QT30tzjMeZojh00Uy7y1nMQ' );//( get_option( 'stripe_api_key' ) );
+        \Stripe\Stripe::setApiKey( get_option( 'stripe_api_key' ) );
 
-    // Authenticate your user.
-    $session = \Stripe\BillingPortal\Session::create([
-    'customer' => 'cus_KYOfCBUP2FPX2t',
-    'return_url' => home_url(),
-    ]);
+        // Authenticate your user.
+        $session = \Stripe\BillingPortal\Session::create([
+        'customer' => $stripe_customerID,
+        'return_url' => home_url(),
+        ]);
 
-    // Redirect to the customer portal.
-    header("Location: " . $session->url);
-    exit();
+        // Redirect to the customer portal.
+        header("Location: " . $session->url);
+        exit();
+    }
+    else {
+
+        // Redirect to the custome location.
+        header("Location: " . get_option( 'no_customer_id_redirect' ));
+        exit();
+        
+    }
 
 }
 

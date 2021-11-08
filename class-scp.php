@@ -55,7 +55,7 @@ class SCP {
 
         function scp_button_shortcode(){
 
-            echo    '<form action="' . esc_attr( admin_url( 'admin-post.php', 'http' ) ) . '" method="POST">' .
+            echo    '<form action="' . esc_attr( admin_url( 'admin-post.php', 'https' ) ) . '" method="POST">' .
                         '<input type="hidden" name="action" value="create_customer_portal_session" />' .
                         '<button type="submit">Customer Portal</button>' .
                     '</form>';
@@ -78,7 +78,7 @@ class SCP {
 
             $userID = $user->ID;
 
-            $stripe_customerID = get_user_meta( $userID, 'wp__stripe_customer_id', true );
+            $stripe_customerID = get_user_meta( $userID, $wpdb->prefix . '_stripe_customer_id', true );
 
             if( $sent_stripe_customerID == $stripe_customerID ){
 
