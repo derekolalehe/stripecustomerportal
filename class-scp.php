@@ -65,22 +65,26 @@ class SCP {
         //Stripe endpoint setup  *http://domain/wp-json/stripecustomerportal/v1/subscriptionended
         add_action( 'rest_api_init', function () {
             register_rest_route( 'stripecustomerportal/v1', '/subscriptionended', array(
-              'methods' => 'GET',
+              'methods' => \WP_REST_Server::CREATABLE,
               'callback' => 'change_customer_role',
             ) );
         } );
 
         function change_customer_role ( $data ) {
 
-            $sent_stripe_customerID = $data[ 'customer' ];
+            global $wpdb;
 
-            $user = wp_get_current_user();
+            $sent_stripe_customerID = $data[ 'data' ][ 'object' ][ 'customer' ];
 
-            $userID = $user->ID;
+            $userID = $wpdb->get_var(
+                "SELECT user_id FROM $wpdb->usermeta " . 
+                "WHERE meta_key = '" . $wpdb->prefix . "_stripe_customer_id" . "' " .
+                "AND meta_value = '" . $sent_stripe_customerID . "'"
+            );
 
-            $stripe_customerID = get_user_meta( $userID, $wpdb->prefix . '_stripe_customer_id', true );
+            $user = get_user_by( 'id', (int)$userID );
 
-            if( $sent_stripe_customerID == $stripe_customerID ){
+            if( $user ){
 
                 $user->remove_role( 'subscriber' );
 
@@ -94,7 +98,7 @@ class SCP {
             }
                       
             return 'Customer ' . $sent_stripe_customerID . ' with subscription ' . 
-            $data[ 'id' ] . ' - SUBSCRIPTION EDNDED';
+            $data[ 'data' ][ 'object' ][ 'id' ] . ' - SUBSCRIPTION EDNDED';
 
         }
 
